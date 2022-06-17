@@ -5,4 +5,4 @@ La partte riguardante il frontend è basata su bootstrap e jQuery.
 
 È possibile testare le operazioni di CRUD con le chiamate postman allegate oppure lanciando la webApp. 
 
-È possibile scaricare un File excel e un File pdf contentene la lista dei clienti/offerte/preventivi
+Inoltre è possibile scaricare un file excel e/o un file pdf contentene la lista dei clienti/offerte/preventivi
