@@ -1,0 +1,74 @@
+-- Database: prodigy
+
+-- DROP DATABASE IF EXISTS prodigy;
+
+CREATE DATABASE prodigy
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Italian_Italy.1252'
+    LC_CTYPE = 'Italian_Italy.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+	
+	
+	
+-- Table: public.clienti
+
+-- DROP TABLE IF EXISTS public.clienti;
+
+CREATE TABLE IF NOT EXISTS public.clienti
+(
+    id_cliente bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    nome text COLLATE pg_catalog."default" NOT NULL,
+    cognome text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default",
+    telefono text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT clienti_pkey PRIMARY KEY (id_cliente)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.clienti
+    OWNER to postgres;
+	
+	
+	
+-- Table: public.offerte
+
+-- DROP TABLE IF EXISTS public.offerte;
+
+CREATE TABLE IF NOT EXISTS public.offerte
+(
+    id_offerta bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    descrizione text COLLATE pg_catalog."default" NOT NULL,
+    prezzo integer NOT NULL,
+    data_attivazione date NOT NULL,
+    id_cliente bigint NOT NULL,
+    CONSTRAINT offerte_pkey PRIMARY KEY (id_cliente)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.offerte
+    OWNER to postgres;
+
+
+
+-- Table: public.preventivi
+
+-- DROP TABLE IF EXISTS public.preventivi;
+
+CREATE TABLE IF NOT EXISTS public.preventivi
+(
+    id_preventivo bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    descrizione text COLLATE pg_catalog."default" NOT NULL,
+    prezzo integer NOT NULL,
+    id_cliente bigint NOT NULL,
+    CONSTRAINT preventivi_pkey PRIMARY KEY (id_preventivo)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.preventivi
+    OWNER to postgres;
