@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "b37f495d-ac60-4d5d-b4b5-f3a57c70a5f0",
+		"name": "ProjectWorkProdigy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17911772"
+	},
+	"item": [
+		{
+			"name": "Clienti",
+			"item": [
+				{
+					"name": "NewCliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"mario\",\r\n    \"cognome\":\"rossi\",\r\n    \"email\": \"mario.rossi@gmail.com\",\r\n    \"telefono\":\"123456789\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/clienti",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"clienti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListaClienti",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/clienti",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"clienti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCliente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"robert\",\r\n    \"cognome\":\"kiyosaki\",\r\n    \"email\": \"robert.kiyosaki@gmail.com\",\r\n    \"telefono\":\"654321987\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/clienti/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"clienti",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/clienti/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"clienti",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offerte",
+			"item": [
+				{
+					"name": "NewOfferta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descrizione\":\"vodafone fibra\",\r\n    \"prezzo\":\"29\",\r\n    \"dataAttivazione\": \"2022-04-01\",\r\n    \"idCliente\":\"2\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/offerte",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"offerte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListaOfferte",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/offerte",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"offerte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOfferte",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descrizione\":\"vodafone fibra\",\r\n    \"prezzo\":\"29\",\r\n    \"dataAttivazione\": \"2022-04-01\",\r\n    \"idCliente\":\"2\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/offerte/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"offerte",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOfferte",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/offerte/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"offerte",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Preventivi",
+			"item": [
+				{
+					"name": "NewPreventivo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descrizione\":\"vodafone 50giga\",\r\n    \"prezzo\":\"9\",\r\n    \"idCliente\":\"6\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/preventivi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"preventivi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListaPreventivi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/preventivi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"preventivi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePreventivi",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descrizione\":\"vodafone unlimited\",\r\n    \"prezzo\":\"39\",\r\n    \"idCliente\":\"2\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/preventivi/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"preventivi",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePreventivi",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/preventivi/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"preventivi",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
