@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Clienti</title>
+<style type="text/css">
+body {
+	background-image: url("css/sfondo.jpg");
+	height: 100vh;
+}
+</style>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="jquery-3.6.0.js"></script>
+
+<script>
+	$(document).ready(function() {
+		lista();
+	});
+	function lista() {
+		$("body").empty();
+		$
+				.get(
+						"http://localhost:8082/clienti",
+						function(data, status) {
+							var cnt = data.length;
+							var tr = "";
+							$("#tbody").empty();
+
+							var table = "<div class='row bg-dark'>"
+									+ "<div class='col-2'text-center'><br /><a href='/menu'><button class='btn btn-secondary btn-sm'><i class='fa fa-arrow-left'></i> menu</button></a></div>"
+									+ "<div class='col-2'></div>"
+									
+									+ "<div class='col-2 text-center h2 text-warning'>"
+									+ "<br />Lista Clienti"
+									+ "</div>"
+									+ "<div class='col-2'></div>"
+									+ "<div class='col-2 text-center'><br /><button class='btn btn-success btn-sm' onclick='inserisci()'><i class='fa fa-plus'></i> inserimento</button></div>"
+									+ "</div> <div>"
+									+ "<table class='table table-responsive  table-dark table-bordered'>"
+									+ "<thead class='table-primary'>" + "<tr>"
+									+ "<th>ID</th>" + "<th>nome</th>"
+									+ "<th>cognome</th>" + "<th>email</th>"
+									+ "<th>telefono</th>" + "<th><div class='col-2'text-center'><a href='http://localhost:8082/download/Clienti.xlsx'><button class='btn btn-success btn-sm'> Clienti.xlsx</button></a></div></th>"
+									+ "<th><div class='col-2'text-center'><a href='http://localhost:8082/download/Cliente.pdf'><button class='btn btn-warning btn-sm'> Clienti.pdf</button></a></div></th>" + "</tr>" + "</thead>"
+									+ "<tbody id='tbody'>" + "</tbody>"
+									+ "</table>" + "</div>";
+
+							$("body").append(table);
+
+							for (let i = 0; i < cnt; i++) {
+
+								var idCliente = data[i].idCliente;
+								var nome = data[i].nome;
+								var cognome = data[i].cognome;
+								var email = data[i].email;
+								var telefono = data[i].telefono;
+
+								tr = tr
+										+ "<tr><td>"
+										+ idCliente
+										+ "</td><td>"
+										+ nome
+										+ "</td><td>"
+										+ cognome
+										+ "</td><td>"
+										+ email
+										+ "</td><td>"
+										+ telefono
+										+ "</td><td><button class='btn btn-primary' onclick='modifica("
+										+ JSON.stringify(data[i])
+										+ ")'><i class='fa fa-edit'></i> modifica</button> </td>"
+										+ "</td><td><button class='btn btn-danger' onclick='elimina("
+										+ JSON.stringify(data[i])
+										+ ")'><i class='fa fa-trash'></i> elimina</button> </td></tr>";
+							}
+							$("#tbody").append(tr);
+						});
+	}
+
+	function modifica(cliente) {
+		$("body").empty();
+
+		var form = "<div class='text-center h2 text-warning my-5 bg-dark'>Modifica Cliente: "
+				+ cliente.idCliente
+				+ "<br /><br /></div>"
+				+ "<div>"
+				+ "<table class='table table-dark table-sm text-center'>"
+				+ "<tr><th>nome</th><td>"
+				+ "<input type='text' id='nome' name='nome' value='" + cliente.nome + "'>"
+				+ "</td></tr>"
+				+ "<tr><th>cognome</th><td>"
+				+ "<input type='text' id='cognome' name='cognome' value='" + cliente.cognome + "'>"
+				+ "</td></tr>"
+				+ "<tr><th>email</th><td>"
+				+ "<input type='text' id='email' name='email' value='" + cliente.email + "'>"
+				+ "</td></tr>"
+				+ "<tr><th>telefono</th><td>"
+				+ "<input type='text' id='telefono' name='telefono' value='" + cliente.telefono + "'>"
+				+ "</td></tr>"
+				+ "</table>"
+				+ "</div> <div class='text-center'>"
+				+ "<button class='btn btn-primary' onclick='submitModificaCliente("
+				+ cliente.idCliente
+				+ ")'><i class='fa fa-edit'></i> conferma</button> &nbsp;"
+				+ "<button class='btn btn-secondary' onclick='lista()'><i class='fa fa-close'></i> annulla</button>"
+				+ "<br /><br /></div>";
+
+		$("body").append(form);
+
+	}
+
+	function submitModificaCliente(idCliente) {
+
+		var dataSubmit = "{" + "\"nome\":" + "\"" + $("#nome").val() + "\","
+				+ "\"cognome\":" + "\"" + $("#cognome").val() + "\","
+				+ "\"email\":" + "\"" + $("#email").val() + "\","
+				+ "\"telefono\":" + "\"" + $("#telefono").val() + "\"" + "}";
+
+		$.ajax({
+			type : "PUT",
+			url : "http://localhost:8082/clienti/" + idCliente,
+			contentType : "application/json",
+			data : dataSubmit,
+			success : function(data) {
+				lista();
+			}
+		});
+	}
+
+	function elimina(cliente) {
+
+		$.ajax({
+			type : "DELETE",
+			url : "http://localhost:8082/clienti/" + cliente.idCliente,
+			contentType : "application/json",
+			success : function(data) {
+				// alert(data);
+				lista();
+			}
+		});
+	}
+
+	function inserisci() {
+		$("body").empty();
+
+		var form = "<div class='text-center h2 text-warning my-5 bg-dark'>Inserisci Cliente: "
+				+ "<br /><br /></div>"
+				+ "<div>"
+				+ "<table class='table table-dark table-sm text-center'>"
+				+ "<tr><th>nome</th><td>"
+				+ "<input type='text' id='nome' name='nome' value=''>" 
+				+ "</td></tr>"
+				+ "<tr><th>cognome</th><td>"
+				+ "<input type='text' id='cognome' name='cognome' value=''>"
+				+ "</td></tr>"
+				+ "<tr><th>email</th><td>"
+				+ "<input type='text' id='email' name='email' value=''>" 
+				+ "</td></tr>"
+				+ "<tr><th>telefono</th><td>"
+				+ "<input type='text' id='telefono' name='telefono' value=''>" 
+				+ "</td></tr>"
+				+ "</table>"
+				+ "</div> <div class='text-center'>"
+				+ "<button class='btn btn-primary' onclick='submitInserisciCliente("
+				+ ")'><i class='fa fa-edit'></i> conferma</button> &nbsp;"
+				+ "<button class='btn btn-secondary' onclick='lista()'><i class='fa fa-close'></i> annulla</button>"
+				+ "<br /><br /></div>";
+
+		$("body").append(form);
+
+	}
+	
+	function submitInserisciCliente() {
+
+		var dataSubmit = "{" + "\"nome\":" + "\"" + $("#nome").val() + "\","
+		+ "\"cognome\":" + "\"" + $("#cognome").val() + "\","
+		+ "\"email\":" + "\"" + $("#email").val() + "\","
+		+ "\"telefono\":" + "\"" + $("#telefono").val() + "\"" + "}";
+
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8082/clienti/",
+			contentType : "application/json",
+			data : dataSubmit,
+			success : function(data) {
+				// alert(data);
+				lista();
+			}
+		});
+	}
+	
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

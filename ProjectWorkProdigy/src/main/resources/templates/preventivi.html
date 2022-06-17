@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Offerte</title>
+<style type="text/css">
+body {
+	background-image: url("css/sfondo.jpg");
+	height: 100vh;
+}
+</style>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="jquery-3.6.0.js"></script>
+
+<script>
+	$(document).ready(function() {
+		lista();
+	});
+	function lista() {
+		$("body").empty();
+		$
+				.get(
+						"http://localhost:8082/preventivi",
+						function(data, status) {
+							var cnt = data.length;
+							var tr = "";
+							$("#tbody").empty();
+
+							var table = "<div class='row bg-dark'>"
+									+ "<div class='col-2'text-center'><br /><a href='/menu'><button class='btn btn-secondary btn-sm'><i class='fa fa-arrow-left'></i> menu</button></a></div>"
+									+ "<div class='col-2'></div>"
+									+ "<div class='col-4 text-center h2 text-warning'>"
+									+ "<br />Lista Preventivi"
+									+ "</div>"
+									+ "<div class='col-2'></div>"
+									+ "<div class='col-2 text-center'><br /><button class='btn btn-success btn-sm' onclick='inserisci()'><i class='fa fa-plus'></i> inserimento</button></div>"
+									+ "</div> <div>"
+									+ "<table class='table table-responsive  table-dark table-bordered'>"
+									+ "<thead class='table-primary'>" + "<tr>"
+									+ "<th>ID</th>" + "<th>descrizione</th>"
+									+ "<th>prezzo</th>" 
+									+ "<th>idCliente</th>" + "<th><div class='col-2'text-center'><a href='http://localhost:8082/download/Preventivi.xlsx'><button class='btn btn-success btn-sm'> Preventivi.xlsx</button></a></div></th>"
+									+ "<th><div class='col-2'text-center'><a href='http://localhost:8082/download/Preventivi.pdf'><button class='btn btn-warning btn-sm'> Preventivi.pdf</button></a></div></th>" + "</tr>" + "</thead>"
+									+ "<tbody id='tbody'>" + "</tbody>"
+									+ "</table>" + "</div>";
+
+							$("body").append(table);
+
+							for (let i = 0; i < cnt; i++) {
+
+								var idPreventivo = data[i].idPreventivo;
+								var descrizione = data[i].descrizione;
+								var prezzo = data[i].prezzo;
+								var idCliente = data[i].idCliente;
+
+								tr = tr
+										+ "<tr><td>"
+										+ idPreventivo
+										+ "</td><td>"
+										+ descrizione
+										+ "</td><td>"
+										+ prezzo
+										+ "</td><td>"
+										+ idCliente
+										+ "</td><td><button class='btn btn-primary' onclick='modifica("
+										+ JSON.stringify(data[i])
+										+ ")'><i class='fa fa-edit'></i> modifica</button> </td>"
+										+ "</td><td><button class='btn btn-danger' onclick='elimina("
+										+ JSON.stringify(data[i])
+										+ ")'><i class='fa fa-trash'></i> elimina</button> </td></tr>";
+							}
+							$("#tbody").append(tr);
+						});
+	}
+
+	function modifica(preventivi) {
+		$("body").empty();
+
+		var form = "<div class='text-center h2 text-warning my-5 bg-dark'>Modifica Preventivi: "
+				+ preventivi.idPreventivo
+				+ "<br /><br /></div>"
+				+ "<div>"
+				+ "<table class='table table-dark table-sm text-center'>"
+				+ "<tr><th>descrizione</th><td>"
+				+ "<input type='text' id='descrizione' name='descrizione' value='" + preventivi.descrizione + "'>"
+				+ "</td></tr>"
+				+ "<tr><th>prezzo</th><td>"
+				+ "<input type='text' id='prezzo' name='prezzo' value='" + preventivi.prezzo + "'>"
+				+ "</td></tr>"
+				+ "<tr><th>ID cliente</th><td>"
+				+ "<input type='text' id='idCliente' name='idCliente' value='" + preventivi.idCliente + "'>"
+				+ "</td></tr>"
+				+ "</table>"
+				+ "</div> <div class='text-center'>"
+				+ "<button class='btn btn-primary' onclick='submitModificaPreventivi("
+				+ preventivi.idPreventivo
+				+ ")'><i class='fa fa-edit'></i> conferma</button> &nbsp;"
+				+ "<button class='btn btn-secondary' onclick='lista()'><i class='fa fa-close'></i> annulla</button>"
+				+ "<br /><br /></div>";
+
+		$("body").append(form);
+
+	}
+
+	function submitModificaPreventivi(idPreventivo) {
+
+		var dataSubmit = "{" + "\"descrizione\":" + "\"" + $("#descrizione").val() + "\","
+				+ "\"prezzo\":" + "\"" + $("#prezzo").val() + "\","
+				+ "\"idCliente\":" + "\"" + $("#idCliente").val() + "\"" + "}";
+
+		$.ajax({
+			type : "PUT",
+			url : "http://localhost:8082/preventivi/" + idPreventivo,
+			contentType : "application/json",
+			data : dataSubmit,
+			success : function(data) {
+				lista();
+			}
+		});
+	}
+
+	function elimina(preventivi) {
+
+		$.ajax({
+			type : "DELETE",
+			url : "http://localhost:8082/preventivi/" + preventivi.idPreventivo,
+			contentType : "application/json",
+			success : function(data) {
+				// alert(data);
+				lista();
+			}
+		});
+	}
+
+	function inserisci() {
+		$("body").empty();
+
+		var form = "<div class='text-center h2 text-warning my-5 bg-dark'>Inserisci Preventivo: "
+				+ "<br /><br /></div>"
+				+ "<div>"
+				+ "<table class='table table-dark table-sm text-center'>"
+				+ "<tr><th>descrizione</th><td>"
+				+ "<input type='text' id='descrizione' name='descrizione' value=''>" 
+				+ "</td></tr>"
+				+ "<tr><th>prezzo</th><td>"
+				+ "<input type='text' id='prezzo' name='prezzo' value=''>"
+				+ "</td></tr>"
+				+ "<tr><th>ID Cliente</th><td>"
+				+ "<input type='idCliente' id='idCliente' name='idCliente' value=''>" 
+				+ "</td></tr>"
+				+ "</table>"
+				+ "</div> <div class='text-center'>"
+				+ "<button class='btn btn-primary' onclick='submitInserisciPreventivi("
+				+ ")'><i class='fa fa-edit'></i> conferma</button> &nbsp;"
+				+ "<button class='btn btn-secondary' onclick='lista()'><i class='fa fa-close'></i> annulla</button>"
+				+ "<br /><br /></div>";
+
+		$("body").append(form);
+
+	}
+	
+	function submitInserisciPreventivi() {
+
+		var dataSubmit = "{" + "\"descrizione\":" + "\"" + $("#descrizione").val() + "\","
+				+ "\"prezzo\":" + "\"" + $("#prezzo").val() + "\","
+				+ "\"idCliente\":" + "\"" + $("#idCliente").val() + "\"" + "}";
+
+
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8082/preventivi/",
+			contentType : "application/json",
+			data : dataSubmit,
+			success : function(data) {
+				// alert(data);
+				lista();
+			}
+		});
+	}
+	
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
